@@ -1,0 +1,88 @@
+/* Reset default margin & padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar Styling */
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Left side navigation (Evenly Spaced) */
+.nav-left {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Navigation Links */
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-item:hover,
+/* Highlight active navigation item */
+.nav-item.active {
+    color: #ffcc00 !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(255, 204, 0, 0.8);
+}
+
+
+/* Right side (Login & Register) */
+.nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+/* Button Styling */
+.nav-btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Login Button */
+.login {
+    background: #007bff;
+    color: white;
+}
+
+.login:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Register Button */
+.register {
+    background: #ff4d4d;
+    color: white;
+}
+
+.register:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+/* Ensure full-page layout adapts properly */
+body, html {
+    width: 100%;
+    overflow-x: hidden;
+}

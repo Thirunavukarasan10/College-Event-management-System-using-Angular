@@ -1,0 +1,47 @@
+<div class="hall-booking-container">
+    <h2>Hall Booking</h2>
+    
+    <form (ngSubmit)="submitBooking()">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" [(ngModel)]="hallBooking.name" name="name" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" [(ngModel)]="hallBooking.email" name="email" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="date">Booking Date</label>
+        <input type="date" id="date" [(ngModel)]="hallBooking.date" name="date" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="timeSlot">Time Slot</label>
+        <select id="timeSlot" [(ngModel)]="hallBooking.timeSlot" name="timeSlot" required>
+          <option value="">Select a time slot</option>
+          <option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+          <option value="12:00 PM - 2:00 PM">12:00 PM - 2:00 PM</option>
+          <option value="3:00 PM - 5:00 PM">3:00 PM - 5:00 PM</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="purpose">Purpose</label>
+        <textarea id="purpose" [(ngModel)]="hallBooking.purpose" name="purpose" required></textarea>
+      </div>
+  
+      <button type="submit">Book Now</button>
+    </form>
+  
+    <div class="booking-list" *ngIf="bookings.length > 0">
+      <h3>Upcoming Bookings</h3>
+      <ul>
+        <li *ngFor="let booking of bookings">
+          <strong>{{ booking.name }}</strong> booked the hall on <strong>{{ booking.date }}</strong> ({{ booking.timeSlot }}) for <em>{{ booking.purpose }}</em>.
+        </li>
+      </ul>
+    </div>
+  </div>
+  

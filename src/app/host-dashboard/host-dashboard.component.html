@@ -1,0 +1,63 @@
+<div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <h2>Host Dashboard</h2>
+      <ul>
+        <li (click)="navigateTo('create-event')">Create Event</li>
+        <li (click)="navigateTo('my-events')">My Events</li>
+        <li (click)="navigateTo('profile')">My Profile</li>
+        <li (click)="navigateTo('logout')">Logout</li>
+      </ul>
+    </nav>
+  
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Welcome, {{ hostName }}!</h1>
+      <p>Manage your events and profile easily.</p>
+  
+      <!-- ✅ Create Event Section -->
+      <div *ngIf="activeSection === 'create-event'">
+        <h2>Create New Event</h2>
+        <form (ngSubmit)="createEvent()">
+          <input type="text" placeholder="Event Title" [(ngModel)]="newEvent.title" name="title" required>
+          <input type="date" [(ngModel)]="newEvent.date" name="date" required>
+          <textarea [(ngModel)]="newEvent.description" name="description" placeholder="Event Description" required></textarea>
+          <button type="submit">Create Event</button>
+        </form>
+      </div>
+  
+      <!-- ✅ My Events Section -->
+      <div *ngIf="activeSection === 'my-events'">
+        <h2>My Events</h2>
+        <div *ngFor="let event of hostEvents" class="event-card">
+          <img [src]="event.image" [alt]="event.title" class="event-img">
+          <div class="event-info">
+            <h3>{{ event.title }}</h3>
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p>{{ event.description }}</p>
+            <h4>Registrations:</h4>
+            <ul>
+              <li *ngFor="let registration of event.registrations">
+                {{ registration.name }} - {{ registration.email }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- ✅ My Profile Section -->
+      <div *ngIf="activeSection === 'profile'">
+        <h2>My Profile</h2>
+        <p><strong>Name:</strong> {{ hostName }}</p>
+        <p><strong>Organization:</strong> {{ hostOrganization }}</p>
+        <p><strong>Email:</strong> {{ hostEmail }}</p>
+      </div>
+  
+      <!-- ✅ Logout Section -->
+      <div *ngIf="activeSection === 'logout'">
+        <h2>Logging Out...</h2>
+        <p>Redirecting to login page...</p>
+      </div>
+    </div>
+  </div>
+  

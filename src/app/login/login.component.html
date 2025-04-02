@@ -1,0 +1,12 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <input type="email" [(ngModel)]="email" placeholder="Enter Email" required />
+  <input type="password" [(ngModel)]="password" placeholder="Enter Password" required />
+
+  <button (click)="login()">Login</button>
+
+  <!-- ✅ Styled Register Link -->
+  <p>Don't have an account? <a class="blue-link" (click)="navigateToRegister()">Register</a></p>
+
+</div>

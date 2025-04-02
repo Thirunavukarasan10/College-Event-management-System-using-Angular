@@ -1,0 +1,133 @@
+/* Container */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #1e3a5f;
+  color: white;
+  padding: 20px;
+  position: fixed; /* Fix the sidebar to the left */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto; /* Allow scrolling inside the sidebar if the content is large */
+  z-index: 10; /* Ensure sidebar stays above main content */
+}
+
+/* Sidebar Heading */
+.sidebar h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Sidebar Links */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.sidebar li:hover {
+  background: #2c5273;
+  transform: translateX(5px); /* Adds a subtle effect to the hover state */
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 250px; /* Offset content from the sidebar */
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100vh; /* Ensures scrolling within the main content */
+}
+
+/* Events Grid */
+.events-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Event Card */
+.event-card {
+  background: white;
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.event-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.event-info {
+  padding: 15px;
+}
+
+.event-info h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  background: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+/* Responsive Sidebar for smaller screens */
+@media (max-width: 768px) {
+  .sidebar {
+      position: static; /* Makes sidebar not fixed on smaller screens */
+      width: 100%; /* Full width on mobile */
+      padding: 10px;
+  }
+
+  .main-content {
+      margin-left: 0; /* Adjust content margin to fit mobile view */
+  }
+
+  .sidebar ul {
+      text-align: center; /* Center align the sidebar items */
+  }
+
+  .sidebar li {
+      font-size: 16px;
+      padding: 10px;
+  }
+
+  .event-card {
+      width: 100%; /* Make event cards responsive on smaller screens */
+  }
+}

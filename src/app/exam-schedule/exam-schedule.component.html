@@ -1,0 +1,32 @@
+<div class="exam-container">
+    <h2>Upcoming Exam Schedule</h2>
+    
+    <div class="exam-category" *ngFor="let category of getUpcomingExams()">
+      <h3>{{ category.title }}</h3>
+      <div class="exam-list">
+        <div class="exam-card" *ngFor="let exam of category.exams">
+          <h4>{{ exam.subject }}</h4>
+          <p><strong>Date:</strong> {{ exam.date | date: 'MMMM d, yyyy' }}</p>
+          <p><strong>Time:</strong> {{ exam.time }}</p>
+          <button (click)="viewDetails(exam)">View Details</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Exam Details Modal -->
+    <div class="exam-details" *ngIf="selectedExam">
+      <div class="details-card">
+        <h3>{{ selectedExam.subject }} - Exam Details</h3>
+        <p><strong>Date:</strong> {{ selectedExam.date | date: 'MMMM d, yyyy' }}</p>
+        <p><strong>Time:</strong> {{ selectedExam.time }}</p>
+        <h4>Student Room Allocation</h4>
+        <ul>
+          <li *ngFor="let student of selectedExam.students">
+            <strong>{{ student.regNo }}</strong> - {{ student.room }}
+          </li>
+        </ul>
+        <button class="close-btn" (click)="closeDetails()">Close</button>
+      </div>
+    </div>
+  </div>
+  

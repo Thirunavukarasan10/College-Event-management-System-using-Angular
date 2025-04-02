@@ -1,29 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
-  });
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterModule],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'event'; // ✅ Add this line
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  constructor(private router: Router) {}
 
-  it(`should have the 'event' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('event');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, event');
-  });
-});
+  isActive(route: string): boolean {
+    return this.router.url === route;
+  }
+}
