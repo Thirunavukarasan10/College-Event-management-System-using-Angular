@@ -1,39 +1,173 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // ✅ Import Router for navigation
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { EventsComponent } from '../events/events.component';
+
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  description: string;
+  image: string;
+}
+
+interface User {
+  name: string;
+  email: string;
+  role: string;
+  department?: string;
+  rollNumber?: string;
+}
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
 export class StudentDashboardComponent {
-  studentName = 'John Doe';
-  studentDept = 'Computer Science';
-  studentRoll = 'CSE2025';
+  studentName: string = 'Student';
+  studentEmail: string = '';
+  studentDept: string = '';
+  studentRoll: string = '';
   
-  activeSection: string = 'upcoming-events'; // ✅ Default section
+  activeSection: string = 'upcoming-events';
+  registeredEvents: Event[] = [];
+  isEditingProfile: boolean = false;
 
-  events = [
-    { title: 'Hackathon 2025', date: 'April 10, 2025', description: 'Compete in coding challenges.', image: 'assets/images/hackathon.jpg' },
-    { title: 'CSE Symposium', date: 'April 15, 2025', description: 'Showcase your technical skills.', image: 'assets/images/symposium.jpg' },
-    { title: 'Music Concert', date: 'April 20, 2025', description: 'Enjoy live music performances.', image: 'assets/images/concert.jpg' },
-    { title: 'Hostel Day', date: 'April 25, 2025', description: 'A fun-filled day for hostel students.', image: 'assets/images/hostel.jpg' },
-    { title: 'Women’s Day', date: 'March 8, 2025', description: 'Celebrate the power of women.', image: 'assets/images/womensday.jpg' },
-    { title: 'Pongal Celebration', date: 'January 14, 2025', description: 'Traditional Pongal festival event.', image: 'assets/images/pongal.jpg' }
-  ];
+  // Get all events from the central EventsComponent
+  events: Event[] = EventsComponent.getAllEvents();
 
-  constructor(private router: Router) {} // ✅ Inject Router
+  constructor(private router: Router) {
+    this.verifyUserSession();
+    this.loadUserData();
+    this.loadRegisteredEvents();
+  }
 
-  navigateTo(section: string) {
+  private verifyUserSession(): void {
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const currentUser: User = JSON.parse(currentUserStr);
+    if (currentUser.role !== 'student') {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  private loadUserData(): void {
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) return;
+
+    const currentUser: User = JSON.parse(currentUserStr);
+    this.studentName = currentUser.name || 'Student';
+    this.studentEmail = currentUser.email || '';
+    this.studentDept = currentUser.department || '';
+    this.studentRoll = currentUser.rollNumber || '';
+  }
+
+  private loadRegisteredEvents(): void {
+    if (!this.studentEmail) return;
+
+    const userEventsStr = localStorage.getItem('userEvents') || '{}';
+    const userEvents: Record<string, number[]> = JSON.parse(userEventsStr);
+    
+    if (userEvents[this.studentEmail]) {
+      this.registeredEvents = this.events.filter(event => 
+        userEvents[this.studentEmail].includes(event.id)
+      );
+    }
+  }
+
+  navigateTo(section: string): void {
     this.activeSection = section;
     if (section === 'logout') {
-      setTimeout(() => {
-        alert('Logged out successfully!');
-        this.router.navigate(['/login']); // ✅ Redirect to login page
-      }, 1000);
+      localStorage.removeItem('currentUser');
+      this.router.navigate(['/login']);
     }
+  }
+
+  isRegistered(eventId: number): boolean {
+    return this.registeredEvents.some(e => e.id === eventId);
+  }
+
+  registerForEvent(eventId: number): void {
+    if (!this.studentEmail) {
+      alert('Session error. Please login again!');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    let userEvents: Record<string, number[]> = JSON.parse(localStorage.getItem('userEvents') || '{}');
+    
+    if (!userEvents[this.studentEmail]) {
+      userEvents[this.studentEmail] = [];
+    }
+
+    if (!userEvents[this.studentEmail].includes(eventId)) {
+      userEvents[this.studentEmail].push(eventId);
+      localStorage.setItem('userEvents', JSON.stringify(userEvents));
+      
+      // Register student in the central event system
+      EventsComponent.registerForEvent(eventId, this.studentEmail, this.studentName);
+      
+      this.loadRegisteredEvents();
+      alert('Successfully registered for the event!');
+    } else {
+      alert('You have already registered for this event!');
+    }
+  }
+
+  unregisterFromEvent(eventId: number): void {
+    if (!this.studentEmail) return;
+
+    const userEvents: Record<string, number[]> = JSON.parse(localStorage.getItem('userEvents') || '{}');
+    
+    if (userEvents[this.studentEmail]) {
+      userEvents[this.studentEmail] = userEvents[this.studentEmail].filter(id => id !== eventId);
+      localStorage.setItem('userEvents', JSON.stringify(userEvents));
+      this.loadRegisteredEvents();
+      alert('Successfully unregistered from the event!');
+    }
+  }
+
+  toggleEditProfile(): void {
+    this.isEditingProfile = !this.isEditingProfile;
+  }
+
+  saveProfile(): void {
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const currentUser: User = JSON.parse(currentUserStr);
+    const updatedUser = {
+      ...currentUser,
+      department: this.studentDept,
+      rollNumber: this.studentRoll
+    };
+
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+    // Update in users array if exists
+    const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex(u => u.email === currentUser.email);
+    if (userIndex !== -1) {
+      users[userIndex] = {
+        ...users[userIndex],
+        department: this.studentDept,
+        rollNumber: this.studentRoll
+      };
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    this.isEditingProfile = false;
+    alert('Profile updated successfully!');
   }
 }

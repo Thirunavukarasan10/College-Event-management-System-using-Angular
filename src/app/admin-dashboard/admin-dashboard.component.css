@@ -1,84 +1,158 @@
-.admin-dashboard {
-    display: flex;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    min-height: 100vh;
-}
-
-.logo h2 {
-    text-align: center;
-}
-
-.nav-links {
-    list-style: none;
+/* ===== Global Styles ===== */
+* {
+    margin: 0;
     padding: 0;
-}
-
-.nav-links li {
-    padding: 10px;
-    margin: 10px 0;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    display: block;
-}
-
-.nav-links a.active {
-    background-color: #555;
-    padding: 10px;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-.event-cards, .hall-list {
+    box-sizing: border-box;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  /* ===== Dashboard Layout ===== */
+  .dashboard-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.card, .hall-card {
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.btn {
-    padding: 10px;
-    border: none;
+    min-height: 100vh;
+  }
+  
+  /* ===== Sidebar Styles ===== */
+  .sidebar {
+    width: 250px;
+    background-color: #3a4a5c;
+    color: white;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar h2 {
+    padding: 0 20px 20px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+  }
+  
+  .sidebar li {
+    padding: 12px 20px;
     cursor: pointer;
-    margin-top: 10px;
-}
-
-.approve-event {
-    background-color: green;
+    transition: background-color 0.2s;
+  }
+  
+  .sidebar li:hover {
+    background-color: #4e5d70;
+  }
+  
+  .sidebar li.active {
+    background-color: #4287c8;
+    border-left: 3px solid #f8f9fa;
+  }
+  
+  /* ===== Main Content Styles ===== */
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+  }
+  
+  .main-content h1 {
+    margin-bottom: 20px;
+    color: #3a4a5c;
+    font-size: 2rem;
+  }
+  
+  .main-content h2 {
+    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #4287c8;
+    color: #3a4a5c;
+  }
+  
+  /* ===== Stats Container ===== */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .stat-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .stat-card h3 {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .stat-card p {
+    color: #3a4a5c;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* ===== Table Styles ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    background-color: #4287c8;
     color: white;
-}
-
-.reject-event {
-    background-color: red;
-    color: white;
-}
-
-.delete-event, .delete-hall {
-    background-color: darkred;
-    color: white;
-}
+    font-weight: 500;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  tr:hover td {
+    background-color: #f5f8fa;
+  }
+  
+  /* ===== Responsive Design ===== */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      flex-direction: column;
+    }
+    
+    .sidebar {
+      width: 100%;
+      padding: 10px 0;
+    }
+    
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+    
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }

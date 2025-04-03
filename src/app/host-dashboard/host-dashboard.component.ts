@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventsComponent } from '../events/events.component';
 
 @Component({
   selector: 'app-host-dashboard',
@@ -12,41 +13,34 @@ import { Router } from '@angular/router';
 })
 export class HostDashboardComponent {
   hostName: string = 'John Doe';
-  hostOrganization: string = 'ABC University';
   hostEmail: string = 'host@example.com';
-
-  activeSection: string = 'create-event'; // Default section
-  newEvent = { title: '', date: '', description: '' };
+  activeSection: string = 'create-event';
   
-  hostEvents = [
-    { 
-      title: 'Tech Fest', 
-      date: 'April 10, 2025', 
-      description: 'Annual Tech Event', 
-      image: 'assets/images/techfest.jpg',
-      registrations: [
-        { name: 'Alice Johnson', email: 'alice@example.com' },
-        { name: 'Bob Smith', email: 'bob@example.com' }
-      ] 
-    },
-    { 
-      title: 'Science Fair', 
-      date: 'May 15, 2025', 
-      description: 'Showcase scientific projects', 
-      image: 'assets/images/sciencefair.jpg',
-      registrations: [
-        { name: 'Charlie Brown', email: 'charlie@example.com' }
-      ]
-    }
-  ];
+  newEvent = { 
+    title: '', 
+    date: '', 
+    description: '', 
+    image: 'assets/images/event-default.jpg' 
+  };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.loadHostData();
+  }
+
+  private loadHostData(): void {
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (currentUserStr) {
+      const currentUser = JSON.parse(currentUserStr);
+      this.hostName = currentUser.name || 'Host';
+      this.hostEmail = currentUser.email || 'host@example.com';
+    }
+  }
 
   navigateTo(section: string) {
     this.activeSection = section;
     if (section === 'logout') {
       setTimeout(() => {
-        alert('Logged out successfully!');
+        localStorage.removeItem('currentUser');
         this.router.navigate(['/login']);
       }, 1000);
     }
@@ -54,23 +48,45 @@ export class HostDashboardComponent {
 
   createEvent() {
     if (this.newEvent.title && this.newEvent.date && this.newEvent.description) {
-      // Format date to match display style
       const formattedDate = new Date(this.newEvent.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       });
       
-      this.hostEvents.push({ 
+      // Add event to central repository
+      EventsComponent.addEvent({
         title: this.newEvent.title,
         date: formattedDate,
         description: this.newEvent.description,
-        image: 'assets/images/event-default.jpg',
-        registrations: []
+        image: this.newEvent.image,
+        hostEmail: this.hostEmail
       });
       
       // Reset form
-      this.newEvent = { title: '', date: '', description: '' };
+      this.newEvent = { 
+        title: '', 
+        date: '', 
+        description: '', 
+        image: 'assets/images/event-default.jpg' 
+      };
+      
+      alert('Event created successfully!');
     }
   }
+
+  getHostEvents() {
+    return EventsComponent.getEventsByHost(this.hostEmail);
+  }
+  // Add this method to your HostDashboardComponent class
+deleteEvent(eventId: number) {
+  if (confirm('Are you sure you want to delete this event?')) {
+    const success = EventsComponent.deleteEvent(eventId);
+    if (success) {
+      alert('Event deleted successfully!');
+    } else {
+      alert('Failed to delete event. It may have already been removed.');
+    }
+  }
+}
 }

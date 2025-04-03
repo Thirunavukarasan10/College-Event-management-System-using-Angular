@@ -2,6 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  department?: string;
+  rollNumber?: string;
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,27 +25,42 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   login() {
-    const adminEmail = "admin@gmail.com"; // Static Admin Email
-    const adminPassword = "Admin@123"; // Static Admin Password
-
-    if (this.email === adminEmail && this.password === adminPassword) {
-      localStorage.setItem('loggedInUser', JSON.stringify({ email: adminEmail, role: 'admin' }));
-      this.router.navigateByUrl('/admin-dashboard');
+    // Admin login
+    if (this.email === "admin@gmail.com" && this.password === "Admin@123") {
+      const adminUser = {
+        name: "Admin",
+        email: this.email,
+        role: 'admin',
+        department: 'Administration'
+      };
+      localStorage.setItem('currentUser', JSON.stringify(adminUser));
+      this.router.navigate(['/admin-dashboard']);
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === this.email && u.password === this.password);
+    // Regular user login
+    const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.email === this.email && u.password === this.password);
 
     if (user) {
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-
+      // Store only necessary data in currentUser
+      const currentUser = {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        department: user.department,
+        rollNumber: user.rollNumber
+      };
+      
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      
+      // Redirect based on role
       switch (user.role.toLowerCase()) {
         case 'host':
-          this.router.navigateByUrl('/host-dashboard');
+          this.router.navigate(['/host-dashboard']);
           break;
         case 'student':
-          this.router.navigateByUrl('/student-dashboard');
+          this.router.navigate(['/student-dashboard']);
           break;
         default:
           alert('Invalid role detected.');
@@ -46,8 +70,7 @@ export class LoginComponent {
     }
   }
 
-  // ✅ Navigate to Register Page
   navigateToRegister() {
-    this.router.navigateByUrl('/register');
+    this.router.navigate(['/register']);
   }
 }

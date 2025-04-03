@@ -1,3 +1,76 @@
-<h2>Admin Dashboard</h2>
-<p>Welcome, Admin!</p>
-<button (click)="logout()">Logout</button>
+<div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <h2>Admin Dashboard</h2>
+      <ul>
+        <li [class.active]="activeSection === 'dashboard'" (click)="navigateTo('dashboard')">Dashboard</li>
+        <li [class.active]="activeSection === 'users'" (click)="navigateTo('users')">User Management</li>
+        <li [class.active]="activeSection === 'events'" (click)="navigateTo('events')">Event Management</li>
+        <li (click)="navigateTo('logout')">Logout</li>
+      </ul>
+    </nav>
+  
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Welcome, {{ adminName }}!</h1>
+  
+      <!-- Dashboard Overview -->
+      <div *ngIf="activeSection === 'dashboard'">
+        <h2>Overview</h2>
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3>Total Users</h3>
+            <p>{{ getTotalUsers() }}</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Events</h3>
+            <p>{{ getTotalEvents() }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- User Management -->
+      <div *ngIf="activeSection === 'users'">
+        <h2>User Management</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Event Management -->
+      <div *ngIf="activeSection === 'events'">
+        <h2>Event Management</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Host</th>
+              <th>Registrations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let event of events">
+              <td>{{ event.title }}</td>
+              <td>{{ event.date }}</td>
+              <td>{{ event.hostEmail }}</td>
+              <td>{{ event.registrations.length }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

@@ -1,9 +1,10 @@
 <nav class="navbar">
-  <div class="nav-left">
+  <a href="/" class="nav-logo">Team NexGen</a>
+  
+  <div class="nav-items">
     <a routerLink="/" [class.active]="isActive('/')" class="nav-item">Home</a>
     <a routerLink="/events" [class.active]="isActive('/events')" class="nav-item">Events</a>
     <a routerLink="/schedule" [class.active]="isActive('/schedule')" class="nav-item">Exam Schedule</a>
   </div>
 </nav>
-
 <router-outlet></router-outlet>
