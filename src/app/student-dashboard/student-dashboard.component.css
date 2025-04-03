@@ -1,77 +1,101 @@
-/* Container */
 .dashboard-container {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
 }
 
-/* Sidebar */
+/* Sidebar Styles */
 .sidebar {
   width: 250px;
-  background: #1e3a5f;
+  background-color: #1e40af;
   color: white;
-  padding: 20px;
-  position: fixed; /* Fix the sidebar to the left */
-  top: 0;
-  left: 0;
-  bottom: 0;
-  overflow-y: auto; /* Allow scrolling inside the sidebar if the content is large */
-  z-index: 10; /* Ensure sidebar stays above main content */
+  padding: 2rem 1.5rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: 100%;
 }
 
-/* Sidebar Heading */
 .sidebar h2 {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Sidebar Links */
 .sidebar ul {
   list-style: none;
   padding: 0;
 }
 
 .sidebar li {
-  font-size: 18px;
-  font-weight: bold;
-  padding: 15px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s ease-in-out;
-  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .sidebar li:hover {
-  background: #2c5273;
-  transform: translateX(5px); /* Adds a subtle effect to the hover state */
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
 }
 
-/* Main Content */
+.sidebar li:active {
+  transform: translateX(5px) scale(0.98);
+}
+
+/* Main Content Styles */
 .main-content {
-  margin-left: 250px; /* Offset content from the sidebar */
-  padding: 20px;
-  flex-grow: 1;
-  overflow-y: auto;
-  height: 100vh; /* Ensures scrolling within the main content */
+  flex: 1;
+  margin-left: 250px;
+  padding: 2rem 3rem;
+  background-color: white;
+  min-height: 100vh;
+}
+
+.main-content h1 {
+  color: #1e3a8a;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.main-content p {
+  color: #64748b;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Section Headers */
+.main-content h2 {
+  color: #2563eb;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
 }
 
 /* Events Grid */
 .events-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* Event Card */
 .event-card {
   background: white;
-  width: 300px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 .event-img {
@@ -81,53 +105,122 @@
 }
 
 .event-info {
-  padding: 15px;
+  padding: 1.25rem;
 }
 
 .event-info h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  color: #1e3a8a;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
 }
 
+.event-info p {
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.event-info p strong {
+  color: #334155;
+}
+
+/* Button Styles */
 .btn {
-  display: inline-block;
-  background: #ff4d4d;
+  background-color: #2563eb;
   color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
 .btn:hover {
-  background: #cc0000;
-  transform: scale(1.05);
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-/* Responsive Sidebar for smaller screens */
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Profile Section */
+.profile-info {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+}
+
+.profile-info p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #334155;
+}
+
+.profile-info p strong {
+  color: #1e3a8a;
+  display: inline-block;
+  width: 120px;
+}
+
+/* Logout Section */
+.logout-message {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .sidebar {
-      position: static; /* Makes sidebar not fixed on smaller screens */
-      width: 100%; /* Full width on mobile */
-      padding: 10px;
+  .dashboard-container {
+    flex-direction: column;
   }
 
-  .main-content {
-      margin-left: 0; /* Adjust content margin to fit mobile view */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 1rem;
   }
 
   .sidebar ul {
-      text-align: center; /* Center align the sidebar items */
+    display: flex;
+    overflow-x: auto;
+    gap: 0.5rem;
   }
 
   .sidebar li {
-      font-size: 16px;
-      padding: 10px;
+    white-space: nowrap;
+    margin-bottom: 0;
   }
 
-  .event-card {
-      width: 100%; /* Make event cards responsive on smaller screens */
+  .main-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .main-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .main-content h2 {
+    font-size: 1.3rem;
   }
 }

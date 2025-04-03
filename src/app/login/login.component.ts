@@ -16,7 +16,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   login() {
-    const adminEmail = "admin@example.com"; // Static Admin Email
+    const adminEmail = "admin@gmail.com"; // Static Admin Email
     const adminPassword = "Admin@123"; // Static Admin Password
 
     if (this.email === adminEmail && this.password === adminPassword) {

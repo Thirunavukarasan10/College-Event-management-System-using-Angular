@@ -1,91 +1,122 @@
 .register-container {
   max-width: 400px;
   margin: 50px auto;
-  padding: 25px;
+  padding: 2.5rem;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h2 {
-  color: #007bff;
-  margin-bottom: 20px;
-  font-size: 24px;
+.register-container h2 {
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
-
-input, select {
+.register-container input,
+.register-container select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: 0.3s;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  appearance: none;
+  background-color: white;
 }
 
-input:focus, select:focus {
-  border-color: #007bff;
+.register-container select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232563eb' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.register-container input:focus,
+.register-container select:focus {
+  border-color: #2563eb;
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-button {
-  background: #007bff;
+.register-container input::placeholder {
+  color: #94a3b8;
+}
+
+.register-container button {
+  background: #2563eb;
   color: white;
-  padding: 10px 15px;
+  padding: 0.75rem;
   border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
   width: 100%;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-.login-link {
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.login-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
-}
-.blue-link {
-  color: blue;
-  text-decoration: none;
-  font-weight: bold;
+  margin: 1.5rem 0 1rem;
   cursor: pointer;
-  transition: color 0.3s ease-in-out;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
 }
 
-/* Ensure no unwanted pseudo-elements */
-.blue-link::after {
-  content: none !important; /* Remove any added content */
-  display: none !important;
+.register-container button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
 }
 
-/* Hover Effect */
-.blue-link:hover {
-  color: darkblue;
-  text-decoration: underline;
+.register-container button:active {
+  transform: translateY(0);
+}
+
+.register-container .blue-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.register-container .blue-link:hover {
+  color: #1e40af;
+}
+
+.register-container .blue-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #2563eb;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.register-container .blue-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .register-container {
+    margin: 20px;
+    padding: 1.5rem;
+  }
+  
+  .register-container h2 {
+    font-size: 1.5rem;
+  }
 }
